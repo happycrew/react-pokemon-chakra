@@ -15,6 +15,9 @@ export const Footer: FC = () => {
       right="0"
       backgroundColor={
         colorMode === 'light' ? colors.light.background : colors.dark.background
+      }
+      boxShadow={
+        colorMode === 'light' ? colors.light.boxShadow : colors.dark.boxShadow
       }>
       Angular zalupa © {new Date().getFullYear()}
     </Box>

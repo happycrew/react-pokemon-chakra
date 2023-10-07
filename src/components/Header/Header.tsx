@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Flex,
   Box,
@@ -18,6 +18,23 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ toggleColorMode }) => {
   const { colorMode } = useColorMode();
   const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <Flex
       as="header"
@@ -28,7 +45,14 @@ export const Header: React.FC<HeaderProps> = ({ toggleColorMode }) => {
         colorMode === 'light' ? colors.light.background : colors.dark.background
       }
       position="sticky"
-      top="0">
+      top="0"
+      boxShadow={
+        isScrolled
+          ? colorMode === 'light'
+            ? colors.light.boxShadow
+            : colors.dark.boxShadow
+          : 'none'
+      }>
       {isLargerThan500 && (
         <Heading
           fontSize="2xl"
