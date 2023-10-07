@@ -10,3 +10,9 @@ export type ColorModeContextType = {
 export type ColorModeProviderProps = {
   children: ReactNode;
 }
+
+export type ColorTheme = {
+  background: string;
+  text: string;
+  accent: string;
+}

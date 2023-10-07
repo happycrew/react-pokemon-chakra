@@ -9,23 +9,37 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, SearchIcon } from '@chakra-ui/icons';
+import { ColorTheme } from '../../types/types';
 
 interface HeaderProps {
-  isLight: boolean; // Передаем значение светлой/темной темы через пропс
-  toggleColorMode: () => void; // Передаем функцию переключения темы через пропс
+  isLight: boolean;
+  toggleColorMode: () => void;
+  colors: {
+    light: ColorTheme;
+    dark: ColorTheme;
+  };
 }
 
-export const Header: React.FC<HeaderProps> = ({ isLight, toggleColorMode }) => {
+export const Header: React.FC<HeaderProps> = ({
+  isLight,
+  toggleColorMode,
+  colors,
+}) => {
   return (
     <Flex
       alignItems="center"
       justifyContent="space-between"
       padding="1rem"
-      backgroundColor={isLight ? '#F7F7F7' : '#1A202C'}>
+      backgroundColor={
+        isLight ? colors.light.background : colors.dark.background
+      }
+      position="sticky" 
+      top="0" 
+    >
       <Text
         fontSize="2xl"
         fontWeight="bold"
-        color={isLight ? '#333333' : '#E2E8F0'}>
+        color={isLight ? colors.light.text : colors.dark.text}>
         Pokemon App
       </Text>
       <Box display="flex" alignItems="center">
@@ -33,14 +47,18 @@ export const Header: React.FC<HeaderProps> = ({ isLight, toggleColorMode }) => {
           <Input
             type="text"
             placeholder="Search Pokemon..."
-            bg={isLight ? '#FFFFFF' : '#2D3748'}
+            bg={isLight ? colors.light.background : colors.dark.background}
             borderRadius="md"
             borderColor="transparent"
             width="300px"
-            _focus={{ borderColor: isLight ? '#007BFF' : '#63B3ED' }}
+            _focus={{
+              borderColor: isLight ? colors.light.accent : colors.dark.accent,
+            }}
           />
           <InputLeftElement pointerEvents="none">
-            <SearchIcon color={isLight ? '#333333' : '#E2E8F0'} />
+            <SearchIcon
+              color={isLight ? colors.light.text : colors.dark.text}
+            />
           </InputLeftElement>
         </InputGroup>
         <IconButton
@@ -49,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({ isLight, toggleColorMode }) => {
           onClick={toggleColorMode}
           ml="2"
           bg="transparent"
-          color={isLight ? '#333333' : '#E2E8F0'}
+          color={isLight ? colors.light.text : colors.dark.text}
           _hover={{ bg: 'transparent' }}
         />
       </Box>
