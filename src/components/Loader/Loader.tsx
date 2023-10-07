@@ -7,7 +7,7 @@ export const Loader: FC = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      height="100vh"
+      height="80vh"
     >
       <Spinner size="xl" />
     </Box>

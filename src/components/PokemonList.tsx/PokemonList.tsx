@@ -5,9 +5,13 @@ import { PokemonCard } from '../PokemonCard';
 
 interface PokemonListProps {
   pokemons: Pokemon[];
+  handlePokemon: (pokemon: Pokemon) => void;
 }
 
-export const PokemonList: FC<PokemonListProps> = ({ pokemons }) => {
+export const PokemonList: FC<PokemonListProps> = ({
+  pokemons,
+  handlePokemon,
+}) => {
   return (
     <Grid
       as="main"
@@ -27,8 +31,12 @@ export const PokemonList: FC<PokemonListProps> = ({ pokemons }) => {
         md: 'repeat(3, 1fr)',
         lg: 'repeat(4, 1fr)',
       }}>
-      {pokemons.map((pokemon) => (
-        <PokemonCard key={pokemon.id} pokemon={pokemon} />
+      {pokemons.map(pokemon => (
+        <PokemonCard
+          key={pokemon.id}
+          pokemon={pokemon}
+          handlePokemon={handlePokemon}
+        />
       ))}
     </Grid>
   );

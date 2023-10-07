@@ -5,14 +5,20 @@ import { colors } from '../../utils/colors';
 
 interface PokemonProps {
   pokemon: Pokemon;
+  handlePokemon: (pokemon: Pokemon) => void;
 }
 
-export const PokemonCard: FC<PokemonProps> = ({ pokemon }) => {
+export const PokemonCard: FC<PokemonProps> = ({ pokemon, handlePokemon }) => {
   const { colorMode } = useColorMode();
+
+  const handleClick = () => {
+    handlePokemon(pokemon);
+  };
 
   return (
     <Box
       p={4}
+      onClick={handleClick}
       border={colorMode === 'light' ? colors.light.border : colors.dark.border}
       borderRadius="md"
       cursor="pointer"

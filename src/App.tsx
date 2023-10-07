@@ -7,11 +7,14 @@ import { PokemonList } from './components/PokemonList.tsx';
 import { getAllPokemons, getPokemonsByName } from './utils/pokemons.ts';
 import { Loader } from './components/Loader/Loader.tsx';
 import './App.scss';
+import { ModalWindow } from './components/ModalWindow/ModalWindow.tsx';
 
 export const App: FC = () => {
   const { toggleColorMode } = useColorMode();
   const [isLoaded, setIsLoaded] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [term, setTerm] = useState('');
 
   useEffect(() => {
@@ -39,6 +42,20 @@ export const App: FC = () => {
     setTerm(newTerm);
   };
 
+  const handleCardClick = (pokemon: Pokemon) => {
+    setSelectedPokemon(pokemon);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPokemon(null);
+  };
+
+  useEffect(() => {
+    console.log(selectedPokemon);
+  }, [selectedPokemon]);
+
   return (
     <>
       <Header
@@ -46,7 +63,18 @@ export const App: FC = () => {
         term={term}
         onInputChange={handleInputChange}
       />
-      {isLoaded ? <Loader /> : <PokemonList pokemons={pokemons} />}
+      {isModalOpen && (
+        <ModalWindow
+          pokemon={selectedPokemon}
+          isModal={isModalOpen}
+          closeModal={closeModal}
+        />
+      )}
+      {isLoaded ? (
+        <Loader />
+      ) : (
+        <PokemonList pokemons={pokemons} handlePokemon={handleCardClick} />
+      )}
       <Footer />
     </>
   );
