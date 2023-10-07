@@ -5,6 +5,9 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  Text,
+  Box,
+  useColorMode,
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Pokemon } from '../../types/types';
@@ -20,17 +23,29 @@ export const ModalWindow: FC<ModalWindowProps> = ({
   closeModal,
   isModal,
 }) => {
+  const { colorMode } = useColorMode();
+  console.log(colorMode);
   return (
     <Modal isOpen={isModal} onClose={closeModal}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{pokemon!.name}</ModalHeader>
+        <ModalHeader fontSize="30px" m="0 auto" textTransform="uppercase">
+          {pokemon!.name}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {/* Отображение данных о покемоне */}
           <p>Height: {pokemon!.height}</p>
           <p>Weight: {pokemon!.weight}</p>
-          {/* Добавьте другие данные о покемоне */}
+        </ModalBody>
+        <ModalBody>
+          {pokemon!.stats.map(el => (
+            <Text>
+              <Box as="span" fontWeight="bold" fontSize="xl" marginRight="10px">
+                {el.stat.name}:
+              </Box>
+              {el.base_stat}
+            </Text>
+          ))}
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useColorMode } from '@chakra-ui/react';
+import { Box, Link, useColorMode, Text } from '@chakra-ui/react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Pokemon } from './types/types';
@@ -73,7 +73,23 @@ export const App: FC = () => {
       {isLoaded ? (
         <Loader />
       ) : (
-        <PokemonList pokemons={pokemons} handlePokemon={handleCardClick} />
+        <div>
+          {pokemons.length === 0 ? (
+            <Box textAlign="center" mt="5em">
+              <Text fontSize="xl">
+                Sorry, zero pokemons here.
+                <br />
+                But you can put your time to good use and learn{' '}
+                <Link href="https://angular.io/" target="_blank" fontSize="2xl">
+                  Angular
+                </Link>{' '}
+                here.
+              </Text>
+            </Box>
+          ) : (
+            <PokemonList pokemons={pokemons} handlePokemon={handleCardClick} />
+          )}
+        </div>
       )}
       <Footer />
     </>
