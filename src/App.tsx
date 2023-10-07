@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import './App.scss';
-import { Header } from './components/Header';
 import { useColorMode } from '@chakra-ui/react';
-import { colors } from './utils/colors';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import './App.scss';
 
 export const App: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -12,9 +12,9 @@ export const App: FC = () => {
       <Header
         isLight={isLight}
         toggleColorMode={toggleColorMode}
-        colors={colors}
       />
       <h1>Hello world</h1>
+      <Footer isLight={isLight} />
     </>
   );
 };

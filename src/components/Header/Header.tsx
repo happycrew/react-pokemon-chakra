@@ -9,22 +9,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, SearchIcon } from '@chakra-ui/icons';
-import { ColorTheme } from '../../types/types';
+import { colors } from '../../utils/colors';
 
 interface HeaderProps {
   isLight: boolean;
   toggleColorMode: () => void;
-  colors: {
-    light: ColorTheme;
-    dark: ColorTheme;
-  };
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  isLight,
-  toggleColorMode,
-  colors,
-}) => {
+export const Header: React.FC<HeaderProps> = ({ isLight, toggleColorMode }) => {
   return (
     <Flex
       alignItems="center"
@@ -33,9 +25,8 @@ export const Header: React.FC<HeaderProps> = ({
       backgroundColor={
         isLight ? colors.light.background : colors.dark.background
       }
-      position="sticky" 
-      top="0" 
-    >
+      position="sticky"
+      top="0">
       <Text
         fontSize="2xl"
         fontWeight="bold"
@@ -49,7 +40,6 @@ export const Header: React.FC<HeaderProps> = ({
             placeholder="Search Pokemon..."
             bg={isLight ? colors.light.background : colors.dark.background}
             borderRadius="md"
-            borderColor="transparent"
             width="300px"
             _focus={{
               borderColor: isLight ? colors.light.accent : colors.dark.accent,
