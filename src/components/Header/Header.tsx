@@ -2,62 +2,52 @@ import React from 'react';
 import {
   Flex,
   Box,
-  Input,
-  InputGroup,
-  InputLeftElement,
   IconButton,
-  Text,
+  useColorMode,
+  Heading,
+  useMediaQuery,
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon, SearchIcon } from '@chakra-ui/icons';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { colors } from '../../utils/colors';
+import { Search } from '../Search';
 
 interface HeaderProps {
-  isLight: boolean;
   toggleColorMode: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isLight, toggleColorMode }) => {
+export const Header: React.FC<HeaderProps> = ({ toggleColorMode }) => {
+  const { colorMode } = useColorMode();
+  const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
   return (
     <Flex
+      as="header"
       alignItems="center"
       justifyContent="space-between"
       padding="1rem"
       backgroundColor={
-        isLight ? colors.light.background : colors.dark.background
+        colorMode === 'light' ? colors.light.background : colors.dark.background
       }
       position="sticky"
       top="0">
-      <Text
-        fontSize="2xl"
-        fontWeight="bold"
-        color={isLight ? colors.light.text : colors.dark.text}>
-        Pokemon App
-      </Text>
+      {isLargerThan500 && (
+        <Heading
+          fontSize="2xl"
+          fontWeight="bold"
+          color={colorMode === 'light' ? colors.light.text : colors.dark.text}>
+          Pokemon App
+        </Heading>
+      )}
       <Box display="flex" alignItems="center">
-        <InputGroup>
-          <Input
-            type="text"
-            placeholder="Search Pokemon..."
-            bg={isLight ? colors.light.background : colors.dark.background}
-            borderRadius="md"
-            width="300px"
-            _focus={{
-              borderColor: isLight ? colors.light.accent : colors.dark.accent,
-            }}
-          />
-          <InputLeftElement pointerEvents="none">
-            <SearchIcon
-              color={isLight ? colors.light.text : colors.dark.text}
-            />
-          </InputLeftElement>
-        </InputGroup>
+        <Search />
         <IconButton
-          aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
-          icon={isLight ? <MoonIcon /> : <SunIcon />}
+          aria-label={`Switch to ${
+            colorMode === 'light' ? 'dark' : 'light'
+          } mode`}
+          icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
           ml="2"
           bg="transparent"
-          color={isLight ? colors.light.text : colors.dark.text}
+          color={colorMode === 'light' ? colors.light.text : colors.dark.text}
           _hover={{ bg: 'transparent' }}
         />
       </Box>

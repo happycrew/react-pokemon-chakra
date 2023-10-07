@@ -1,12 +1,9 @@
-import { Box } from '@chakra-ui/react';
+import { Box, useColorMode } from '@chakra-ui/react';
 import { FC } from 'react';
 import { colors } from '../../utils/colors';
 
-interface FooterProps {
-  isLight: boolean;
-}
-
-export const Footer: FC<FooterProps> = ({ isLight }) => {
+export const Footer: FC = () => {
+  const { colorMode } = useColorMode();
   return (
     <Box
       as="footer"
@@ -17,7 +14,7 @@ export const Footer: FC<FooterProps> = ({ isLight }) => {
       left="0"
       right="0"
       backgroundColor={
-        isLight ? colors.light.background : colors.dark.background
+        colorMode === 'light' ? colors.light.background : colors.dark.background
       }>
       Angular zalupa © {new Date().getFullYear()}
     </Box>
