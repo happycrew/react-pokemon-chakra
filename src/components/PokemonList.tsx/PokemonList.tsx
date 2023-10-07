@@ -1,9 +1,10 @@
-import { Box, Grid, Text, useColorMode } from '@chakra-ui/react';
+import { Box, Grid, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import { RawData } from '../../types/types';
+import { Pokemon } from '../../types/types';
+import { PokemonCard } from '../PokemonCard';
 
 interface PokemonListProps {
-  pokemons: RawData[];
+  pokemons: Pokemon[];
 }
 
 export const PokemonList: FC<PokemonListProps> = ({ pokemons }) => {
@@ -26,10 +27,8 @@ export const PokemonList: FC<PokemonListProps> = ({ pokemons }) => {
         md: 'repeat(3, 1fr)',
         lg: 'repeat(4, 1fr)',
       }}>
-      {pokemons.map((pokemon, index) => (
-        <Box key={index} p={4} border="1px solid #e2e8f0" borderRadius="md">
-          <Text fontWeight="bold">{pokemon.name}</Text>
-        </Box>
+      {pokemons.map((pokemon) => (
+        <PokemonCard key={pokemon.id} pokemon={pokemon} />
       ))}
     </Grid>
   );

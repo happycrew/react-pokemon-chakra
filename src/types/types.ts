@@ -121,14 +121,6 @@ export interface SearchState {
   searchWord: string;
 }
 
-export interface CardListProps {
-  cards: Pokemon[];
-}
-
-export interface CardProps {
-  data: Pokemon;
-}
-
 export interface SearchProps {
   setPokemons: (pokeName?: string) => Promise<void>;
 }
