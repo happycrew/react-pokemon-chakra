@@ -13,9 +13,15 @@ import { Search } from '../Search';
 
 interface HeaderProps {
   toggleColorMode: () => void;
+  term: string;
+  onInputChange: (term: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ toggleColorMode }) => {
+export const Header: React.FC<HeaderProps> = ({
+  toggleColorMode,
+  term,
+  onInputChange,
+}) => {
   const { colorMode } = useColorMode();
   const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleColorMode }) => {
         </Heading>
       )}
       <Box display="flex" alignItems="center">
-        <Search />
+        <Search term={term} onInputChange={onInputChange} />
         <IconButton
           aria-label={`Switch to ${
             colorMode === 'light' ? 'dark' : 'light'

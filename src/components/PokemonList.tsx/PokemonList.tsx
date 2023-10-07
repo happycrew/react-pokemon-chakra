@@ -1,4 +1,4 @@
-import { Box, Grid, Text } from '@chakra-ui/react';
+import { Grid } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Pokemon } from '../../types/types';
 import { PokemonCard } from '../PokemonCard';
