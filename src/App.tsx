@@ -8,6 +8,8 @@ import { getAllPokemons, getPokemonsByName } from './utils/pokemons.ts';
 import { Loader } from './components/Loader/Loader.tsx';
 import './App.scss';
 import { ModalWindow } from './components/ModalWindow/ModalWindow.tsx';
+import { getLocalStorage, setLocalStorage } from './utils/localStorage.ts';
+import { LocalStorageKeys } from './utils/enum.ts';
 
 export const App: FC = () => {
   const { toggleColorMode } = useColorMode();
@@ -15,7 +17,9 @@ export const App: FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState(() =>
+    getLocalStorage(LocalStorageKeys.SEARCH, ''),
+  );
 
   useEffect(() => {
     setIsLoaded(true);
@@ -25,7 +29,7 @@ export const App: FC = () => {
         if (!term) {
           data = await getAllPokemons();
         } else {
-          data = await getPokemonsByName(term);
+          data = await getPokemonsByName(term.toLowerCase());
         }
         setPokemons(data);
       } catch (error) {
@@ -52,14 +56,15 @@ export const App: FC = () => {
     setSelectedPokemon(null);
   };
 
-  useEffect(() => {
-    console.log(selectedPokemon);
-  }, [selectedPokemon]);
+  const updateTheme = (newTheme: string) => {
+    toggleColorMode();
+    setLocalStorage(LocalStorageKeys.THEME, newTheme);
+  };
 
   return (
     <>
       <Header
-        toggleColorMode={toggleColorMode}
+        toggleColorMode={updateTheme}
         term={term}
         onInputChange={handleInputChange}
       />

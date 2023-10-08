@@ -12,7 +12,7 @@ import { colors } from '../../utils/colors';
 import { Search } from '../Search';
 
 interface HeaderProps {
-  toggleColorMode: () => void;
+  toggleColorMode: (newTheme: string) => void;
   term: string;
   onInputChange: (term: string) => void;
 }
@@ -74,7 +74,9 @@ export const Header: React.FC<HeaderProps> = ({
             colorMode === 'light' ? 'dark' : 'light'
           } mode`}
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-          onClick={toggleColorMode}
+          onClick={() =>
+            toggleColorMode(colorMode === 'light' ? 'dark' : 'light')
+          }
           ml="2"
           bg="transparent"
           color={colorMode === 'light' ? colors.light.text : colors.dark.text}
