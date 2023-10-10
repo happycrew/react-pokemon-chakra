@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Flex,
   Box,
@@ -10,6 +10,7 @@ import {
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { colors } from '../../utils/colors';
 import { Search } from '../Search';
+import { useScroll } from '../../hooks/useScrool';
 
 interface HeaderProps {
   toggleColorMode: (newTheme: string) => void;
@@ -24,22 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const { colorMode } = useColorMode();
   const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const isScrolled = useScroll();
 
   return (
     <Flex
